@@ -60,6 +60,10 @@ public class CartController {
 	
 	@PostMapping("/removeFromCart")
 	public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request) {
+		if (request.getItemId() <= 0 || request.getQuantity() <= 0 || request.getUsername() == null
+				|| request.getUsername().length() <= 0) {
+			return ResponseEntity.badRequest().build();
+		}
 		UserEntity user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
