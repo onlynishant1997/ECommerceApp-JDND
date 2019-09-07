@@ -11,13 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Nishant
+ *
+ */
 @Entity
 @Table(name = "user_order")
 public class UserOrder {
@@ -36,7 +39,7 @@ public class UserOrder {
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable = false, referencedColumnName = "id")
 	@JsonProperty
-    private User user;
+    private UserEntity user;
 	
 	@JsonProperty
 	@Column
@@ -58,11 +61,11 @@ public class UserOrder {
 		this.items = items;
 	}
 
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 	

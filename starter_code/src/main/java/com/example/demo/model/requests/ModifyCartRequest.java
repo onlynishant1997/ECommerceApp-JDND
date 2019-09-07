@@ -2,6 +2,10 @@ package com.example.demo.model.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Nishant
+ *
+ */
 public class ModifyCartRequest {
 	
 	@JsonProperty
