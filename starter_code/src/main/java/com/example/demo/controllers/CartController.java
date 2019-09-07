@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.persistence.Cart;
 import com.example.demo.model.persistence.Item;
-import com.example.demo.model.persistence.User;
+import com.example.demo.model.persistence.UserEntity;
 import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.ItemRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.ModifyCartRequest;
 
+/**
+ * @author Nishant
+ *
+ */
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
@@ -34,7 +38,12 @@ public class CartController {
 	
 	@PostMapping("/addToCart")
 	public ResponseEntity<Cart> addTocart(@RequestBody ModifyCartRequest request) {
-		User user = userRepository.findByUsername(request.getUsername());
+		if (request.getItemId() <= 0 || request.getQuantity() <= 0 || request.getUsername() == null
+				|| request.getUsername().length() <= 0) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		UserEntity user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -51,7 +60,7 @@ public class CartController {
 	
 	@PostMapping("/removeFromCart")
 	public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request) {
-		User user = userRepository.findByUsername(request.getUsername());
+		UserEntity user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
